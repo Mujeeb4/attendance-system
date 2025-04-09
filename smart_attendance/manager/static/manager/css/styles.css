@@ -1,0 +1,195 @@
+/* Manager Panel Custom Styles */
+
+/* Sidebar styles */
+.sidebar {
+    min-height: calc(100vh - 56px);
+    background-color: #343a40;
+    transition: width 0.3s;
+}
+
+.sidebar a {
+    color: rgba(255, 255, 255, 0.75);
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar a:hover, .sidebar a.active {
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 3px solid black;
+}
+
+.sidebar .nav-link {
+    padding: 12px 15px;
+    border-radius: 0;
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Content area */
+.content {
+    padding: 20px;
+}
+
+/* Stats cards */
+.card-stats {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: none;
+    border-radius: 10px;
+}
+
+.card-stats:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-stats .card-body {
+    padding: 25px;
+}
+
+.card-stats i {
+    opacity: 0.8;
+}
+
+.card-stats .display-4 {
+    font-weight: 600;
+}
+
+/* Table styling */
+.table-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.manager-table {
+    margin-bottom: 0;
+}
+
+.manager-table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    color: #495057;
+    font-weight: 600;
+}
+
+.manager-table tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Form styling */
+.form-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 30px;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #495057;
+}
+
+.required-field::after {
+    content: "*";
+    color: #dc3545;
+    margin-left: 4px;
+}
+
+/* Custom breadcrumb */
+.manager-breadcrumb {
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+.manager-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    color: #6c757d;
+}
+
+/* User dropdown */
+.user-dropdown .dropdown-item {
+    padding: 8px 20px;
+}
+
+.user-dropdown .dropdown-item i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Adding space for icons in buttons */
+.btn i {
+    margin-right: 5px;
+}
+
+/* Pagination styling */
+.pagination .page-link {
+    color: #0d6efd;
+    border-radius: 4px;
+    margin: 0 3px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+/* Animation for page transition */
+.content {
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Image preview styles */
+.image-preview-container {
+    max-height: 300px;
+    overflow: hidden;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Checkbox styling */
+.custom-checkbox-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.checkbox-item {
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.checkbox-item:hover {
+    background-color: #f8f9fa;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .sidebar {
+        position: fixed;
+        z-index: 999;
+        width: 250px;
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .content-wrapper {
+        width: 100%;
+    }
+}

@@ -27,8 +27,7 @@ wheels/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-media/
-static/
+
 
 # If you're using PyCharm
 .idea/
@@ -55,3 +54,8 @@ Desktop.ini
 # Ignore migrations if you don't want to include them in version control
 # */migrations/*
 # !*/migrations/__init__.py
+
+#images
+*.jpg
+*.webp
+*.png

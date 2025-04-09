@@ -78,32 +78,6 @@ python manage.py runserver
 
 The application should now be accessible at: http://127.0.0.1:8000/
 
-## Project Structure
-attendance-system/
-├── smart_attendance/         # Main Django project directory
-│   ├── smart_attendance/     # Project settings
-│   ├── attendance/           # Attendance app (main functionality)
-│   │   ├── models.py         # Database models
-│   │   ├── views.py          # View functions
-│   │   ├── forms.py          # Form definitions
-│   │   ├── urls.py           # URL routing
-│   │   ├── recognizer.py     # Face recognition logic
-│   │   ├── train_model.py    # Model training functionality
-│   │   ├── templates/        # HTML templates
-│   │   └── static/           # Static files (CSS, JS)
-│   │
-│   ├── manager/              # Manager app (administrative functions)
-│   │   ├── models.py         # Database models
-│   │   ├── views.py          # View functions
-│   │   ├── forms.py          # Form definitions
-│   │   ├── urls.py           # URL routing
-│   │   ├── templates/        # HTML templates
-│   │   └── static/           # Static files (CSS, JS)
-│   │
-│   └── media/                # User-uploaded files (images)
-├── requirements.txt          # Python dependencies
-└── README.md                 # This file
-
 ### Usage Guide
 # Manager/Administrator
 1- Log in with your admin account

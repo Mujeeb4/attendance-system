@@ -1,0 +1,98 @@
+{% extends 'attendance/base.html' %}
+
+{% block title %}Login - Smart Attendance System{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card login-card">
+                <div class="card-header bg-primary text-white login-header">
+                    <h4 class="mb-0">Login to Smart Attendance System</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-tabs" id="roleTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="student-tab" data-bs-toggle="tab" data-bs-target="#student-pane" type="button">
+                                <i class="fas fa-user-graduate me-1"></i> Student Login
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="teacher-tab" data-bs-toggle="tab" data-bs-target="#teacher-pane" type="button">
+                                <i class="fas fa-chalkboard-teacher me-1"></i> Teacher Login
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="manager-tab" data-bs-toggle="tab" data-bs-target="#manager-pane" type="button">
+                                <i class="fas fa-user-cog me-1"></i> Manager Login
+                            </button>
+                        </li>
+                    </ul>
+                    
+                    <div class="tab-content mt-3" id="roleTabContent">
+                        <div class="tab-pane fade show active" id="student-pane" role="tabpanel">
+                            <form method="post" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                <input type="hidden" name="role" value="student">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Student ID</label>
+                                    <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-sign-in-alt me-1"></i> Login as Student
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="teacher-pane" role="tabpanel">
+                            <form method="post" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                <input type="hidden" name="role" value="teacher">
+                                <div class="mb-3">
+                                    <label for="teacher_username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="teacher_username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="teacher_password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="teacher_password" name="password" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-sign-in-alt me-1"></i> Login as Teacher
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="tab-pane fade" id="manager-pane" role="tabpanel">
+                            <form method="post" class="needs-validation" novalidate>
+                                {% csrf_token %}
+                                <input type="hidden" name="role" value="manager">
+                                <div class="mb-3">
+                                    <label for="manager_username" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="manager_username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="manager_password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="manager_password" name="password" required>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-sign-in-alt me-1"></i> Login as Manager
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+static/
+
+# If you're using PyCharm
+.idea/
+
+# If you're using VS Code
+.vscode/
+
+# Mac OS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Face recognition model files (if you want to exclude them)
+*.dat
+*.model
+*.pkl
+
+# Ignore environment configuration
+.env
+
+# Ignore migrations if you don't want to include them in version control
+# */migrations/*
+# !*/migrations/__init__.py

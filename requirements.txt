@@ -1,0 +1,5 @@
+Django>=5.1.1
+Pillow>=10.0.0
+opencv-python>=4.8.0
+opencv-contrib-python>=4.8.0  # For face recognition modules
+numpy>=1.22.0

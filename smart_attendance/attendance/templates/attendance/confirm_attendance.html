@@ -1,0 +1,61 @@
+{% extends 'attendance/base.html' %}
+
+{% block title %}Confirm Attendance - {{ class.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'attendance:dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'attendance:class_detail' class.id %}">{{ class.name }}</a></li>
+            <li class="breadcrumb-item active">Confirm Attendance</li>
+        </ol>
+    </nav>
+    
+    <h1>Confirm Attendance for {{ class.name }}</h1>
+    <p class="mb-3">Review the automatically detected students and make corrections if needed.</p>
+    
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                
+                <div class="mb-4">
+                    <h5 class="mb-3">Detected Students ({{ recognized_students|length }} of {{ all_students|length }})</h5>
+                    <div class="list-group">
+                        {% for student in all_students %}
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div class="form-check">
+                                    <input type="checkbox" 
+                                           class="form-check-input" 
+                                           name="student_ids" 
+                                           value="{{ student.id }}" 
+                                           id="check-{{ student.id }}"
+                                           {% if student in recognized_students %}checked{% endif %}>
+                                    <label class="form-check-label" for="check-{{ student.id }}">
+                                        {{ student.name }} ({{ student.student_id }})
+                                    </label>
+                                </div>
+                                {% if student in recognized_students %}
+                                <span class="badge bg-success">Detected</span>
+                                {% else %}
+                                <span class="badge bg-secondary">Not Detected</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'attendance:upload_attendance' class.id %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Attendance
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'manager/base.html' %}
+
+{% block title %}Classes - Manager Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Class Management</h1>
+        <a href="{% url 'manager:add_class' %}" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> Add New Class
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            {% if classes %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" id="classesTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Teacher</th>
+                            <th>Students</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for class_group in classes %}
+                        <tr>
+                            <td>{{ class_group.name }}</td>
+                            <td>{{ class_group.teacher.user.get_full_name|default:class_group.teacher.user.username }}</td>
+                            <td>{{ class_group.students.count }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'manager:edit_class' class_group.id %}" class="btn btn-primary">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i> No classes created yet
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

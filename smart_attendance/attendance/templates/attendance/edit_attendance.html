@@ -1,0 +1,67 @@
+{% extends 'attendance/base.html' %}
+
+{% block title %}Edit Attendance - {{ class.name }} - {{ date }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'attendance:dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'attendance:class_detail' class.id %}">{{ class.name }}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'attendance:calendar' class.id %}">Calendar</a></li>
+            <li class="breadcrumb-item active">Edit {{ date }}</li>
+        </ol>
+    </nav>
+    
+    <h1>Edit Attendance for {{ date }}</h1>
+    <p class="mb-4">Make changes to attendance status for {{ class.name }}</p>
+    
+    <div class="card">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>AI Detection</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in student_forms %}
+                            <tr>
+                                <td>{{ item.student.student_id }}</td>
+                                <td>{{ item.student.name }}</td>
+                                <td>
+                                    <select name="status_{{ item.student.id }}" class="form-select">
+                                        <option value="present" {% if item.detail.status == 'present' %}selected{% endif %}>Present</option>
+                                        <option value="absent" {% if item.detail.status == 'absent' %}selected{% endif %}>Absent</option>
+                                        <option value="late" {% if item.detail.status == 'late' %}selected{% endif %}>Late</option>
+                                        <option value="excused" {% if item.detail.status == 'excused' %}selected{% endif %}>Excused</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    {% if item.detail.marked_by_ai %}
+                                    <span class="badge bg-info">AI-detected</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary">Manual</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-3">
+                    <a href="{% url 'attendance:calendar' class.id %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

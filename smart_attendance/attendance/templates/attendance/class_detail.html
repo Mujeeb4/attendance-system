@@ -1,0 +1,56 @@
+{% extends "attendance/base.html" %}
+
+{% block title %}{{ class.name }} - Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ class.name }}</h1>
+    <p class="text-muted">Teacher: {{ class.teacher.user.get_full_name }}</p>
+    
+    <div class="d-flex justify-content-between mb-4">
+        <a href="{% url 'attendance:upload_attendance' class.id %}" class="btn btn-primary">
+            <i class="fas fa-camera"></i> Take Attendance
+        </a>
+        <a href="{% url 'attendance:calendar' class.id %}" class="btn btn-outline-secondary">
+            <i class="far fa-calendar-alt"></i> View Attendance Calendar
+        </a>
+    </div>
+    
+    <h2>Students in this Class</h2>
+    {% if students %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Face Image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td>{{ student.student_id }}</td>
+                        <td>{{ student.name }}</td>
+                        <td>
+                            {% if student.face_image %}
+                                <span class="badge bg-success">Registered</span>
+                            {% else %}
+                                <span class="badge bg-warning">Not Registered</span>
+                                {% if request.user.is_staff %}
+                                <a href="{% url 'attendance:upload_student_face' student.id %}" class="btn btn-sm btn-primary">
+                                    Upload Face
+                                </a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="alert alert-info">No students in this class yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'manager/base.html' %}
+
+{% block title %}Edit Teacher - {{ teacher.user.get_full_name|default:teacher.user.username }} - Manager Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'manager:dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'manager:teacher_list' %}">Teachers</a></li>
+            <li class="breadcrumb-item active">Edit Teacher</li>
+        </ol>
+    </nav>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Edit Teacher: {{ teacher.user.get_full_name|default:teacher.user.username }}</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                {% if user_form.errors or teacher_form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Please correct the errors below:</strong>
+                    {{ user_form.errors }}
+                    {{ teacher_form.errors }}
+                </div>
+                {% endif %}
+                
+                <h5 class="border-bottom pb-2 mb-3">User Account Details</h5>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="{{ user_form.username.id_for_label }}" class="form-label">Username</label>
+                        {{ user_form.username }}
+                        {% if user_form.username.errors %}
+                        <div class="invalid-feedback d-block">{{ user_form.username.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="{{ user_form.email.id_for_label }}" class="form-label">Email</label>
+                        {{ user_form.email }}
+                        {% if user_form.email.errors %}
+                        <div class="invalid-feedback d-block">{{ user_form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="{{ user_form.first_name.id_for_label }}" class="form-label">First Name</label>
+                        {{ user_form.first_name }}
+                        {% if user_form.first_name.errors %}
+                        <div class="invalid-feedback d-block">{{ user_form.first_name.errors }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="{{ user_form.last_name.id_for_label }}" class="form-label">Last Name</label>
+                        {{ user_form.last_name }}
+                        {% if user_form.last_name.errors %}
+                        <div class="invalid-feedback d-block">{{ user_form.last_name.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <h5 class="border-bottom pb-2 mb-3">Teacher Details</h5>
+                
+                <div class="mb-3">
+                    <label for="{{ teacher_form.teacher_id.id_for_label }}" class="form-label">Teacher ID</label>
+                    {{ teacher_form.teacher_id }}
+                    {% if teacher_form.teacher_id.errors %}
+                    <div class="invalid-feedback d-block">{{ teacher_form.teacher_id.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'manager:teacher_list' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Update Teacher
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

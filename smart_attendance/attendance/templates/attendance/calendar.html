@@ -1,0 +1,80 @@
+{% extends 'attendance/base.html' %}
+
+{% block title %}Attendance Calendar - {{ class.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'attendance:dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'attendance:class_detail' class.id %}">{{ class.name }}</a></li>
+            <li class="breadcrumb-item active">Attendance Calendar</li>
+        </ol>
+    </nav>
+    
+    <h1>Attendance Calendar for {{ class.name }}</h1>
+    <p class="mb-4">View and edit attendance records by date.</p>
+    
+    <div class="card mb-4">
+        <div class="card-body">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Include FullCalendar library -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const calendarEl = document.getElementById('calendar');
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,listMonth'
+            },
+            events: function(fetchInfo, successCallback, failureCallback) {
+                // Parse the calendar data from the server
+                const calendarData = JSON.parse('{{ calendar_data|safe }}');
+                
+                // Convert to FullCalendar events format
+                const events = [];
+                for (const [date, data] of Object.entries(calendarData)) {
+                    const attendanceRate = data.present_count / data.total_count;
+                    let color;
+                    
+                    // Color based on attendance rate
+                    if (attendanceRate >= 0.9) {
+                        color = '#4caf50'; // Green for high attendance
+                    } else if (attendanceRate >= 0.75) {
+                        color = '#ff9800'; // Orange for medium attendance
+                    } else {
+                        color = '#f44336'; // Red for low attendance
+                    }
+                    
+                    events.push({
+                        title: `${data.present_count}/${data.total_count} present`,
+                        start: date,
+                        url: `{% url 'attendance:class_detail' class.id %}calendar/${date}/`,
+                        backgroundColor: color,
+                        borderColor: color
+                    });
+                }
+                
+                successCallback(events);
+            },
+            eventClick: function(info) {
+                info.jsEvent.preventDefault();
+                if (info.event.url) {
+                    window.location.href = info.event.url;
+                }
+            }
+        });
+        
+        calendar.render();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'attendance/base.html' %}
+
+{% block title %}Upload Attendance Photo - {{ class.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'attendance:dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'attendance:class_detail' class.id %}">{{ class.name }}</a></li>
+            <li class="breadcrumb-item active">Upload Attendance</li>
+        </ol>
+    </nav>
+    
+    <h1>Take Attendance for {{ class.name }}</h1>
+    <p class="mb-4">Upload a photo of the class to automatically mark attendance.</p>
+    
+    <div class="card">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="{{ form.image.id_for_label }}" class="form-label">Class Photo:</label>
+                    {{ form.image }}
+                    {% if form.image.errors %}
+                    <div class="text-danger mt-1">
+                        {{ form.image.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <div id="imagePreview" class="mt-2" style="display: none;">
+                        <img src="#" id="imagePreviewElement" class="img-fluid" alt="Image preview">
+                    </div>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'attendance:class_detail' class.id %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Process Attendance</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Image preview script
+    document.getElementById('{{ form.image.id_for_label }}').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('imagePreviewElement').src = e.target.result;
+                document.getElementById('imagePreview').style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'manager/base.html' %}
+
+{% block title %}Teachers - Manager Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Teacher Management</h1>
+        <a href="{% url 'manager:add_teacher' %}" class="btn btn-success">
+            <i class="fas fa-plus-circle"></i> Add New Teacher
+        </a>
+    </div>
+    
+    <div class="card">
+        <div class="card-body">
+            {% if teachers %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Classes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for teacher in teachers %}
+                        <tr>
+                            <td>{{ teacher.teacher_id }}</td>
+                            <td>{{ teacher.user.get_full_name|default:"-" }}</td>
+                            <td>{{ teacher.user.email|default:"-" }}</td>
+                            <td>{{ teacher.user.username }}</td>
+                            <td>{{ teacher.classes.count }}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'manager:edit_teacher' teacher.id %}" class="btn btn-primary">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <!-- Add more actions here if needed -->
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i> No teachers registered yet
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

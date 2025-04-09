@@ -1,0 +1,63 @@
+{% extends 'manager/base.html' %}
+
+{% block title %}Add New Student - Manager Dashboard{% endblock %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'manager:dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'manager:student_list' %}">Students</a></li>
+            <li class="breadcrumb-item active">Add New Student</li>
+        </ol>
+    </nav>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Add New Student</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                
+                {% if form.errors %}
+                <div class="alert alert-danger">
+                    <strong>Please correct the errors below:</strong>
+                    {{ form.errors }}
+                </div>
+                {% endif %}
+                
+                <div class="mb-3">
+                    <label for="{{ form.name.id_for_label }}" class="form-label">Full Name</label>
+                    {% if form.name.errors %}
+                    <div class="invalid-feedback d-block">{{ form.name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.student_id.id_for_label }}" class="form-label">Student ID</label>
+                    {% if form.student_id.errors %}
+                    <div class="invalid-feedback d-block">{{ form.student_id.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="{{ form.face_image.id_for_label }}" class="form-label">Face Image (Optional)</label>
+                    {{ form.face_image }}
+                    <small class="form-text text-muted">Upload a clear front-facing photo for face recognition</small>
+                    {% if form.face_image.errors %}
+                    <div class="invalid-feedback d-block">{{ form.face_image.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'manager:student_list' %}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Add Student
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
